@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>포수의 정석 — 입문편 예시 레이아웃</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600&family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif; background: #ECE6D6; color: #1a1a1a; padding: 40px 20px; min-height: 100vh; }
+.shell { max-width: 540px; margin: 0 auto; }
+
+.title-bar { text-align: center; margin-bottom: 24px; color: #5a5040; }
+.title-bar h1 { font-family: 'Noto Serif KR', serif; font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+.title-bar p { font-size: 13px; color: #8a8170; }
+
+.page-counter { text-align: center; font-size: 12px; color: #5a5040; margin-bottom: 16px; letter-spacing: 0.05em; }
+
+.page-wrap { position: relative; }
+.page { display: none; border-radius: 8px; min-height: 700px; flex-direction: column; box-shadow: 0 4px 20px rgba(0,0,0,0.08); animation: pageIn 0.35s ease; }
+.page.active { display: flex; }
+@keyframes pageIn { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
+
+.page-intro { background: #D8CFB8; border: 0.5px solid #B5AC95; padding: 56px 44px; color: #1a1a1a; }
+.intro-stamp { display: inline-block; font-size: 10px; letter-spacing: 0.4em; color: #5a5040; font-weight: 500; border: 0.5px solid #5a5040; padding: 6px 14px; border-radius: 20px; margin-bottom: 32px; align-self: flex-start; }
+.intro-title { font-family: 'Noto Serif KR', serif; font-size: 36px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 12px; }
+.intro-sub { font-family: 'Noto Serif KR', serif; font-size: 16px; color: #5a5040; font-style: italic; margin-bottom: 32px; }
+.intro-rule { height: 0.5px; width: 100%; background: #1a1a1a; margin: 32px 0; }
+.intro-meta { font-size: 13px; line-height: 1.85; color: #3a3328; margin-bottom: 24px; }
+.intro-meta strong { font-weight: 500; color: #1a1a1a; }
+.intro-list { background: rgba(255,255,255,0.4); border-radius: 8px; padding: 16px 18px; font-size: 12px; line-height: 1.85; color: #3a3328; }
+.intro-list .item { display: flex; gap: 10px; padding: 4px 0; }
+.intro-list .item-tag { min-width: 56px; font-weight: 500; color: #1a1a1a; }
+.intro-list .item-text { flex: 1; }
+.intro-footnote { font-size: 11px; color: #5a5040; margin-top: auto; padding-top: 24px; font-style: italic; }
+
+.page-ch-cover { background: #D8CFB8; border: 0.5px solid #B5AC95; padding: 48px 44px; color: #1a1a1a; }
+.ch-tag { font-size: 11px; color: #5a5040; letter-spacing: 0.4em; margin-bottom: 24px; font-weight: 500; }
+.ch-title { font-family: 'Noto Serif KR', serif; font-weight: 500; font-size: 32px; margin-bottom: 24px; letter-spacing: -0.02em; line-height: 1.25; }
+.ch-divider { height: 0.5px; width: 100%; background: #1a1a1a; margin: 28px 0; }
+.copy-block { display: flex; align-items: flex-start; gap: 16px; }
+.big-quote { font-family: 'Noto Serif KR', serif; font-size: 48px; font-weight: 500; line-height: 0.7; flex-shrink: 0; padding-top: 8px; }
+.copy-text { font-family: 'Noto Serif KR', serif; line-height: 1.5; flex: 1; }
+.line-baseball { font-size: 19px; font-weight: 500; display: block; }
+.line-office { font-size: 15px; color: #3a3328; margin-top: 8px; font-style: italic; display: block; line-height: 1.55; }
+
+.ch-cover-imgbox { margin-top: auto; background: rgba(255,255,255,0.3); border: 0.5px dashed #8a8170; border-radius: 8px; height: 200px; display: flex; align-items: center; justify-content: center; color: #5a5040; font-size: 12px; letter-spacing: 0.05em; font-style: italic; }
+
+.page-body { background: #FFFFFF; border: 0.5px solid #E0D8C5; padding: 48px 44px; color: #1a1a1a; }
+
+.ch-header { text-align: center; margin-bottom: 24px; }
+.ch-header-tag { font-size: 10px; letter-spacing: 0.3em; color: #8a8170; font-weight: 500; margin-bottom: 6px; }
+.ch-header-title { font-family: 'Noto Serif KR', serif; font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+.ch-header::after { content: ''; display: block; height: 0.5px; width: 32px; background: #1a1a1a; margin: 14px auto 0; }
+
+.bridge-line { font-size: 12px; color: #8a8170; font-style: italic; margin: 0 0 1.25rem; line-height: 1.6; text-align: center; }
+
+.intro-quote { border-left: 3px solid #1a1a1a; padding: 14px 20px; margin: 0 0 1.5rem; background: #F2EBD9; border-radius: 0 4px 4px 0; }
+.intro-quote p { font-family: 'Noto Serif KR', serif; font-size: 14px; line-height: 1.7; font-style: italic; }
+
+.office-bridge { font-family: 'Noto Serif KR', serif; font-size: 13px; line-height: 1.85; color: #5a5040; font-style: italic; margin-bottom: 1.25rem; padding: 0 4px; }
+.office-bridge p { margin-bottom: 0.75rem; }
+.office-bridge p:last-child { margin-bottom: 0; }
+
+.intro-text-serif { font-family: 'Noto Serif KR', serif; font-size: 14px; line-height: 1.85; color: #3a3328; margin-bottom: 1rem; }
+.intro-text-serif p { margin-bottom: 0.75rem; }
+.intro-text-serif p:last-child { margin-bottom: 0; }
+
+.dotsep { text-align: center; margin: 1.5rem 0; color: #8a8170; font-size: 14px; letter-spacing: 0.3em; }
+
+.intro-bottom { font-family: 'Noto Serif KR', serif; font-size: 15px; font-weight: 500; text-align: center; margin: 1.5rem 0 0; }
+
+.section-tag { font-size: 11px; letter-spacing: 0.2em; color: #8a8170; font-weight: 500; margin-bottom: 6px; }
+.section-title { font-family: 'Noto Serif KR', serif; font-size: 18px; font-weight: 500; margin: 0; letter-spacing: -0.01em; }
+.section-rule { height: 0.5px; width: 32px; background: #1a1a1a; margin: 12px 0 1.25rem; }
+
+.body-text-small { font-size: 13px; line-height: 1.8; }
+.body-text-small p { margin-bottom: 0.75rem; }
+.body-text-small p:last-child { margin-bottom: 0; }
+.body-text-small strong { font-weight: 500; }
+
+.fig-box { background: #F8F4E8; border-radius: 8px; padding: 14px; margin: 1rem 0; }
+.fig-placeholder { background: #EFE8D5; border: 0.5px dashed #B5AC95; border-radius: 6px; height: 110px; display: flex; align-items: center; justify-content: center; color: #8a8170; font-size: 12px; }
+.fig-caption { font-size: 11px; color: #8a8170; margin-top: 8px; font-style: italic; text-align: center; line-height: 1.5; }
+
+.highlight-quote { background: #F2EBD9; border-radius: 8px; padding: 20px; margin: 0 0 1.25rem; text-align: center; }
+.highlight-quote p { font-family: 'Noto Serif KR', serif; font-size: 17px; font-weight: 500; margin: 0; line-height: 1.5; }
+.highlight-quote .source { font-size: 11px; color: #8a8170; margin-top: 12px !important; letter-spacing: 0.05em; font-weight: 400; }
+
+.pullquote { background: #F2EBD9; border-radius: 8px; padding: 18px 20px; margin: 0 0 1.25rem; text-align: center; }
+.pullquote-icon { color: #8a8170; font-size: 14px; display: block; margin-bottom: 8px; }
+.pullquote-text { font-family: 'Noto Serif KR', serif; font-style: italic; font-size: 15px; line-height: 1.6; margin: 0; }
+
+.five-list-clean { font-size: 13px; line-height: 1.7; }
+.five-item-clean { display: flex; gap: 14px; padding: 14px 0; border-bottom: 0.5px solid #E0D8C5; }
+.five-item-clean:last-child { border-bottom: none; }
+.five-num-clean { min-width: 26px; font-family: 'Noto Serif KR', serif; font-size: 18px; font-weight: 500; padding-top: 1px; }
+.five-content-clean { flex: 1; }
+.five-headline-clean { font-weight: 500; font-size: 14px; margin-bottom: 4px; }
+.five-detail-clean { color: #5a5040; font-size: 12px; line-height: 1.65; }
+
+/* 중략 페이지 — 셋째·넷째·다섯째 안내 */
+.ellipsis-page {
+  background: #FAF6EA;
+  border: 0.5px solid #E0D8C5;
+  padding: 48px 44px;
+  color: #1a1a1a;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.ellipsis-mark {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 36px;
+  letter-spacing: 0.3em;
+  color: #8a8170;
+  margin-bottom: 24px;
+}
+.ellipsis-headline {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #3a3328;
+}
+.ellipsis-sub {
+  font-size: 12px;
+  color: #8a8170;
+  letter-spacing: 0.05em;
+  margin-bottom: 32px;
+  font-style: italic;
+}
+.ellipsis-list {
+  background: rgba(255,255,255,0.6);
+  border-radius: 8px;
+  padding: 18px 20px;
+  font-size: 12px;
+  line-height: 2;
+  color: #3a3328;
+  text-align: left;
+  max-width: 320px;
+  margin: 0 auto;
+}
+.ellipsis-list .ell-item { display: flex; gap: 14px; padding: 4px 0; }
+.ellipsis-list .ell-num { font-family: 'Noto Serif KR', serif; font-weight: 500; color: #1a1a1a; min-width: 18px; font-size: 14px; }
+.ellipsis-list .ell-text { flex: 1; }
+.ellipsis-note { margin-top: 28px; font-size: 11px; color: #8a8170; line-height: 1.7; font-style: italic; max-width: 360px; margin-left: auto; margin-right: auto; }
+
+.stance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.stance-card { background: #F8F4E8; border-radius: 8px; padding: 14px; }
+.stance-card .label { font-size: 11px; color: #8a8170; margin-bottom: 4px; letter-spacing: 0.05em; }
+.stance-card .name { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+.stance-card .desc { font-size: 12px; color: #5a5040; line-height: 1.6; }
+
+.frame-quote { border-top: 0.5px solid #1a1a1a; border-bottom: 0.5px solid #1a1a1a; padding: 28px 0; margin: 1.5rem 0; text-align: center; }
+.frame-quote p { font-family: 'Noto Serif KR', serif; font-size: 17px; line-height: 1.6; font-style: italic; margin: 0; letter-spacing: -0.01em; }
+
+.next-ch { background: #F8F4E8; border-radius: 8px; padding: 14px 16px; margin-top: 1rem; font-size: 12px; line-height: 1.7; color: #5a5040; }
+.next-ch strong { color: #1a1a1a; font-weight: 500; }
+
+.page-num { text-align: center; font-size: 11px; color: #8a8170; letter-spacing: 0.2em; margin-top: auto; padding-top: 24px; }
+
+.new-tag { display: inline-block; background: #4A6FA5; color: #FFFFFF; font-size: 9px; padding: 2px 6px; border-radius: 3px; margin-left: 6px; letter-spacing: 0.05em; vertical-align: 3px; font-weight: 500; font-style: normal; font-family: 'Noto Sans KR', sans-serif; }
+
+.five-list { font-size: 13px; line-height: 1.7; }
+.five-item { display: flex; gap: 14px; padding: 12px 0; border-bottom: 0.5px solid #E0D8C5; }
+.five-item:last-child { border-bottom: none; }
+.five-num { min-width: 24px; font-family: 'Noto Serif KR', serif; font-size: 16px; font-weight: 500; }
+.five-content strong { display: block; font-weight: 500; margin-bottom: 2px; }
+.five-content span { color: #5a5040; font-size: 12px; }
+
+/* 첫 번째/두 번째 라벨 — "저자의" 빠진 단순화 */
+.ord-label {
+  font-size: 11px;
+  color: #8a8170;
+  margin-top: 12px !important;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+.nav { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; gap: 12px; flex-wrap: wrap; }
+.nav-btn { background: transparent; border: 0.5px solid #5a5040; color: #1a1a1a; border-radius: 8px; padding: 10px 14px; font-size: 13px; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 4px; transition: all 0.15s ease; }
+.nav-btn:hover:not(:disabled) { background: #1a1a1a; color: #D8CFB8; }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.dots { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: center; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: #B5AC95; cursor: pointer; transition: all 0.2s; border: none; padding: 0; }
+.dot.active { background: #1a1a1a; width: 22px; border-radius: 4px; }
+.divider-dot { width: 1px !important; height: 14px; cursor: default !important; border-left: 0.5px solid #B5AC95; margin: 0 4px; background: transparent !important; }
+
+/* 레이아웃 코멘트 박스 */
+.layout-comment {
+  margin-top: 24px;
+  padding: 18px 20px;
+  background: rgba(255,255,255,0.5);
+  border-left: 3px solid #5a5040;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #3a3328;
+  line-height: 1.75;
+}
+.layout-comment .lc-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  color: #5a5040;
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+  padding: 3px 8px;
+  border: 0.5px solid #8a8170;
+  border-radius: 3px;
+}
+.layout-comment .lc-page-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+.layout-comment p { margin-bottom: 6px; }
+.layout-comment p:last-child { margin-bottom: 0; }
+.layout-comment strong { color: #1a1a1a; font-weight: 500; }
+
+@media print {
+  body { background: white; padding: 0; }
+  .nav, .title-bar, .layout-comment, .page-counter { display: none; }
+  .page { display: flex !important; page-break-after: always; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<div class="title-bar">
+<h1>포수의 정석 — 입문편</h1>
+<p>레이아웃 시안</p>
+</div>
+
+<div class="page-counter" id="counter">1 / 11</div>
+
+<div class="page-wrap">
+
+<!-- 1. 인트로 -->
+<div class="page page-intro active">
+<div class="intro-stamp">LAYOUT PREVIEW</div>
+<h1 class="intro-title">포수의 정석<br>예시 레이아웃</h1>
+<p class="intro-sub">입문편 — 챕터 1 시안</p>
+<div class="intro-rule"></div>
+<div class="intro-meta">
+<p><strong>컨셉.</strong> 야구 좋아하는 직장인 독자를 입구로, 원고의 실용서 본문을 그대로 안고 가는 책. 도입과 마무리는 직장인 비유로 부드럽게, 본문은 원고 그대로 정보 밀도 유지.</p>
+</div>
+<div class="intro-list">
+<div class="item"><span class="item-tag">1쪽</span><span class="item-text">이 안내 페이지</span></div>
+<div class="item"><span class="item-tag">2~11쪽</span><span class="item-text"><strong>챕터 1.</strong> 야구에서 포수란 누구인가</span></div>
+</div>
+<div style="background: rgba(255,255,255,0.4); border-radius: 8px; padding: 16px 18px; margin-top: 12px; font-size: 12px; line-height: 1.85; color: #3a3328;">
+<strong style="color: #1a1a1a; font-weight: 500;">읽는 법.</strong> 좌우 화살표 키로 페이지를 넘기세요. 페이지를 넘길 때마다 아래에 해당 페이지의 레이아웃 코멘트가 나타납니다.
+</div>
+<p class="intro-footnote">— 파랑 "신규" 라벨이 붙은 부분은 원고에 없는, 직장인 톤으로 새로 추가한 문장입니다.</p>
+</div>
+
+<!-- 2. 챕터1 표지 -->
+<div class="page page-ch-cover">
+<div class="ch-tag">CHAPTER 01</div>
+<h2 class="ch-title">야구에서<br>포수란 누구인가</h2>
+<div class="ch-divider"></div>
+<div class="copy-block">
+<span class="big-quote">"</span>
+<p class="copy-text">
+<span class="line-baseball">팀의 진짜 중심.</span>
+<span class="line-office">박수는 못 받지만,<br>박수를 만드는 사람.</span>
+</p>
+</div>
+<div class="ch-cover-imgbox">챕터 일러스트 자리</div>
+<div class="page-num" style="margin-top: 16px;">— 21 —</div>
+</div>
+
+<!-- 3. 챕터1 도입 -->
+<div class="page page-body">
+<div class="ch-header">
+<div class="ch-header-tag">CHAPTER 01</div>
+<div class="ch-header-title">야구에서 포수란 누구인가</div>
+</div>
+<p class="bridge-line">먼저, 야구장이 아닌 곳에서 시작해 보자.</p>
+<div class="intro-quote">
+<p>"발표는 팀장이 했지만, 그 PPT를 새벽까지 만든 사람은 다른 사람이었다."<span class="new-tag">신규</span></p>
+</div>
+<div class="intro-text-serif">
+<p>오후 3시, 회의실. 임원 앞에서 발표가 끝나고 박수가 나온다. 팀장이 환하게 웃으며 자리에 앉는다. 회의실 뒷자리에는 누군가 노트북을 닫고 조용히 짐을 정리한다. 새벽 두 시까지 그 슬라이드를 만진 사람이다.</p>
+</div>
+<div class="dotsep">· · ·</div>
+<div class="body-text-small">
+<p>어린 시절 야구를 하려고 하는 대다수의 학생들은 투수를 선호한다. 미디어를 통해 바라볼 수 있는 투수는 관중의 이목을 받으며 화려해 보이지만, <strong>포수는 항상 마스크에 가려져 있어 누구인지 알 수 없으며, 힘들고 궂은 일을 도맡아 하며, 늘 외로워 보인다.</strong></p>
+</div>
+<p class="intro-bottom">야구에서 포수가 그 사람이다. <span class="new-tag">신규</span></p>
+<div class="page-num">— 22 —</div>
+</div>
+
+<!-- 4. 섹션 1 - 포수의 개념 -->
+<div class="page page-body">
+<div class="section-tag">SECTION 1</div>
+<h3 class="section-title">포수의 개념</h3>
+<div class="section-rule"></div>
+<div class="body-text-small">
+<p>야구에서 포수, 즉 catcher의 어원은 영어 동사 catch(붙잡다)에서 비롯되었다. 19세기 후반 야구의 초창기에는 포수를 "behind" 또는 "backstop"이라 부르기도 했다.</p>
+<p>우리나라 용어인 포수(捕手) 역시 <strong>붙잡을 포(捕) + 손 수(手)</strong>를 사용하여 '잡는 손'이라는 뜻이다.</p>
+</div>
+<div class="fig-box">
+<div class="fig-placeholder">&lt;그림&gt; 자리 — 포수 미트와 마스크</div>
+<p class="fig-caption">책 도입의 첫 이미지</p>
+</div>
+<div class="body-text-small">
+<p>단순한 의미에서 포수는 자기 팀 투수가 던지는 투구를 받아내고 홈플레이트를 지키는 역할을 한다. 수비 시 다른 포지션과 달리 유일하게 그라운드를 바라보면서 수비를 한다. 따라서 <strong>그라운드의 사령관, 팀 최후의 수비수</strong>라 불린다.</p>
+</div>
+<div class="page-num">— 24 —</div>
+</div>
+
+<!-- 5. 섹션 1 이어서 -->
+<div class="page page-body">
+<div class="section-tag">SECTION 1 · 어떤 자리인가</div>
+<h3 class="section-title">포수의 개념 — 어떤 자리인가</h3>
+<div class="section-rule"></div>
+
+<div class="office-bridge">
+<p>회사에서 가장 화려한 일을 하는 사람은 발표자다. 박수도 그가 받는다. 그러나 한 분기를 통째로 굴리는 사람은 따로 있다. 매일 같은 자리에 앉아, 누군가의 발표가 무사히 끝나도록, 누군가의 회의가 깨지지 않도록, 매일 자료를 만지고 일정을 챙기는 사람.<span class="new-tag">신규</span></p>
+<p>야구도 그렇다.<span class="new-tag">신규</span></p>
+</div>
+
+<div class="highlight-quote">
+<p>"투수가 한 경기의 70%를<br>담당하고 있다면,<br>포수는 한 시즌의 70%를 담당한다."</p>
+</div>
+
+<div class="body-text-small">
+<p>한 경기에서 투수는 선발·중간·마무리로 분업되어 있고, 선발투수는 4~5일에 한 번 등판한다. 반면 <strong>포수는 매일 경기에 출전한다.</strong> 한 경기뿐 아니라, 프로의 경우 144경기 전체를 아우러야 한다.</p>
+<p>즉, 포수는 매 경기 마운드에서 던지는 투수에 맞춰 경기를 운영해야 하며, 매 경기 분석과 집중이 필요하다.</p>
+</div>
+
+<div class="page-num">— 26 —</div>
+</div>
+
+<!-- 6. 다섯 가지 -->
+<div class="page page-body">
+<div class="section-tag">SECTION 1 · 다섯 가지</div>
+<h3 class="section-title">포수에게 요구되는 다섯 가지</h3>
+<div class="section-rule"></div>
+
+<div class="body-text-small" style="margin-bottom: 1rem;">
+<p>저자는 포수의 역할을 다음 다섯 가지로 정리한다. 어느 하나가 무너지면 한 시즌을 버틸 수 없다.</p>
+</div>
+
+<div class="five-list-clean">
+<div class="five-item-clean"><span class="five-num-clean">01</span><div class="five-content-clean"><div class="five-headline-clean">한 시즌의 70%를 담당한다</div><div class="five-detail-clean">한 경기 70%는 투수의 몫이지만, 한 시즌은 포수의 몫. 매 경기 출전, 매 투수에 맞춰 경기 운영.</div></div></div>
+<div class="five-item-clean"><span class="five-num-clean">02</span><div class="five-content-clean"><div class="five-headline-clean">투수와 소통한다</div><div class="five-detail-clean">투수가 흔들릴 때 포수는 마운드에 올라가 짧은 한마디를 건넨다. "공 끝이 좋으니까, 조금만 낮게 던지자."</div></div></div>
+<div class="five-item-clean"><span class="five-num-clean">03</span><div class="five-content-clean"><div class="five-headline-clean">상대 타자를 분석한다</div><div class="five-detail-clean">타격 패턴, 타석 루틴, 카운트별 노림수까지. 수치화하기 힘든 습관 하나하나를 기억한다.</div></div></div>
+<div class="five-item-clean"><span class="five-num-clean">04</span><div class="five-content-clean"><div class="five-headline-clean">강한 하체와 체력을 갖춘다</div><div class="five-detail-clean">9이닝 27아웃까지 쉴 새 없이 앉고 일어선다. 체력이 무너지면 마지막 이닝이 흔들린다.</div></div></div>
+<div class="five-item-clean"><span class="five-num-clean">05</span><div class="five-content-clean"><div class="five-headline-clean">경기 흐름을 읽는다</div><div class="five-detail-clean">진행 중인 경기의 분위기와 시즌 전체의 팀 흐름을 동시에 본다. 지금과 멀리, 두 시점을 함께.</div></div></div>
+</div>
+
+<div class="page-num">— 30 —</div>
+</div>
+
+<!-- 7. 첫 번째 항목 -->
+<div class="page page-body">
+<div class="section-tag">SECTION 1 · 첫 번째</div>
+<h3 class="section-title">한 시즌의 70%를 담당한다</h3>
+<div class="section-rule"></div>
+
+<div class="office-bridge">
+<p>회의실에서 발표를 맡는 사람은 매번 다르다. 때로는 팀장이, 때로는 임원이 단상에 선다. 그러나 그 자료를 검토하고, 회의실을 잡고, 마지막까지 오타를 잡아내는 사람은 늘 같은 사람이다. 한 번의 발표가 끝나면 박수가 나오고, 그 박수는 발표자에게 돌아간다.<span class="new-tag">신규</span></p>
+<p>그러나 다음 발표를 준비하는 사람은 어제도 오늘도 그 자리에 앉아 있다.<span class="new-tag">신규</span></p>
+</div>
+
+<div class="dotsep">· · ·</div>
+
+<div class="body-text-small">
+<p>야구에서도 마찬가지다. 한 경기에서 투수의 전문 분업은 선발·중간·마무리로 나뉜다. 특히 선발 투수의 비중이 가장 크다. <strong>선발투수는 4~5일의 로테이션</strong>으로 등판하고, 중간·마무리는 매일 대기하지만 주중에 두세 번 출전한다. 3연투는 다음 주 경기에 지장을 주기 때문에 가능한 지켜준다.</p>
+
+<p>반면 <strong>포수는 매일 경기에 출전한다.</strong> 한 경기뿐 아니라, 프로의 경우 144경기 전체를 아우러야 한다. 즉, 포수는 현재 마운드에서 던지는 투수에 맞는 경기 운영을 위해 <strong>매 경기 분석과 집중이 필요하다.</strong></p>
+
+<p>한 경기의 승패가 투수의 손끝에 달려 있다면, 한 시즌의 흐름은 포수의 어깨 위에 놓여 있다.</p>
+</div>
+
+<div class="page-num">— 31 —</div>
+</div>
+
+<!-- 8. 두 번째 항목 -->
+<div class="page page-body">
+<div class="section-tag">SECTION 1 · 두 번째</div>
+<h3 class="section-title">투수와 소통한다</h3>
+<div class="section-rule"></div>
+
+<div class="office-bridge">
+<p>한 분기 내내 안정적이던 동료가 갑자기 흔들릴 때가 있다. 회의에서 답을 못 찾고, 메일에 오타가 늘고, 발표 자료가 무너진다. 옆자리 사람이 그때 어깨를 한 번 두드리거나, 점심에 같이 가서 한마디를 던지는 것만으로 다음 주가 다시 풀리기도 한다.<span class="new-tag">신규</span></p>
+<p>그 한마디는 답이 아니다. 호흡이다.<span class="new-tag">신규</span></p>
+</div>
+
+<div class="dotsep">· · ·</div>
+
+<div class="body-text-small">
+<p>야구에서도 같다. 투수가 연속해서 볼넷을 주거나 구위가 흔들릴 때, 포수는 타임을 요청하고 마운드에 올라간다. <strong>"공 끝이 좋으니까, 조금만 낮게 던지자."</strong> 짧은 한마디다. 정답이 아니라 심리적 안정을 주는 말이다.</p>
+
+<p>흥미로운 것은 그 대화가 늘 야구 이야기일 필요는 없다는 점이다. 투수의 성향에 따라, 현재 상황과 무관한 야구 외적인 화제를 꺼내기도 한다. 좋아하는 다른 관심사로 잠시 숨을 돌리게 한 뒤, 다시 본인의 투구를 믿게 한다. 그래서 포수는 <strong>투수 한 명 한 명의 성향을 미리 파악하고 있어야 한다.</strong></p>
+</div>
+
+<div class="pullquote">
+<span class="pullquote-icon">"</span>
+<p class="pullquote-text">포수는 애틋한 연인처럼<br>투수의 투구에 대하여 신뢰해야 한다.</p>
+</div>
+
+<div class="body-text-small">
+<p>저자가 쓴 표현이다. 흔들리는 사람에게는 답보다 신뢰가 먼저 가닿는다. 사인을 거부감 없이 받아들일 수 있을 때, 투수는 비로소 자기 공을 던진다.</p>
+</div>
+
+<div class="page-num">— 33 —</div>
+</div>
+
+<!-- 9. 중략 페이지 (신규) -->
+<div class="page ellipsis-page">
+<div style="margin: auto 0;">
+<div class="ellipsis-mark">· · ·</div>
+<div class="ellipsis-headline">셋째, 넷째, 다섯째도<br>같은 리듬으로 이어진다</div>
+<div class="ellipsis-sub">— 시안에서는 생략 —</div>
+
+<div class="ellipsis-list">
+<div class="ell-item"><span class="ell-num">03</span><span class="ell-text">상대 타자를 분석한다</span></div>
+<div class="ell-item"><span class="ell-num">04</span><span class="ell-text">강한 하체와 체력을 갖춘다</span></div>
+<div class="ell-item"><span class="ell-num">05</span><span class="ell-text">경기 흐름을 읽는다</span></div>
+</div>
+
+<p class="ellipsis-note">각 항목마다 직장인 비유 한 단락 + 점 세 개 + 원고 본문 풀어쓰기 + (필요 시) 풀쿼트 한 줄로 같은 패턴이 반복됩니다. 실제 책에서는 이 자리에 세 페이지가 더 들어갑니다.</p>
+</div>
+<div class="page-num">— 34~36 —</div>
+</div>
+
+<!-- 10. 섹션 2 -->
+<div class="page page-body">
+<div class="section-tag">SECTION 2</div>
+<h3 class="section-title">포수의 역할 — 포구·송구·블로킹</h3>
+<div class="section-rule"></div>
+<div class="body-text-small" style="margin-bottom: 1rem;">
+<p>포수는 기본적으로 투수가 던진 공을 가장 올바르게 포구해야 한다. 주자가 있을 때는 견제하거나 도루를 시도할 때 빠르고 정확한 송구를, 바운드 투구나 홈쇄도 시에는 적절한 블로킹을 해야 한다. <strong>포구·송구·블로킹은 포수의 가장 기본이 되는 세 가지 요소이다.</strong></p>
+</div>
+<div style="border-top: 0.5px solid #E0D8C5; padding-top: 1rem; margin-top: 1rem;">
+<div style="font-size: 11px; color: #8a8170; letter-spacing: 0.15em; margin-bottom: 8px;">1) 포수의 기본 자세</div>
+<div class="stance-grid">
+<div class="stance-card"><div class="label">(1) Primary</div><div class="name">기본 수비 자세</div><div class="desc">주자 없을 때. 발뒤꿈치 살짝 들고, 오른손은 등 뒤로 보호.</div></div>
+<div class="stance-card"><div class="label">(2) Secondary</div><div class="name">세컨더리 자세</div><div class="desc">주자 있을 때. 엉덩이를 발뒤꿈치에서 떼고 발 폭을 넓게.</div></div>
+</div>
+</div>
+<div class="fig-box" style="margin-top: 1rem;">
+<div class="fig-placeholder" style="height: 90px;">자세 분해도 자리 — 그림첨부 또는 QR동영상</div>
+<p class="fig-caption">두 자세의 정면·측면 비교 / 세컨더리 자세 발 부분 확대</p>
+</div>
+<div class="page-num">— 38 —</div>
+</div>
+
+<!-- 11. 챕터1 마무리 -->
+<div class="page page-body">
+<div class="ch-header"><div class="ch-header-tag">CHAPTER 01 — 마무리</div></div>
+<div class="body-text-small" style="margin-bottom: 1.5rem;">
+<p>포수는 마스크에 가려진다. 등을 보이고 앉는다. 한 시즌 144경기를 매일 출전하면서, 매 경기 다른 투수의 호흡을 읽고, 매 타석 다른 타자를 기억한다.</p>
+<p>9이닝 27아웃까지 그 자리를 지키는 일은, 결국 <strong>자기 자리를 끝까지 버티는 일</strong>이다. 새벽 두 시까지 슬라이드를 만지는 사람과, 9회말 안방에 앉아 있는 사람은 어쩌면 같은 일을 한다.</p>
+</div>
+<div class="dotsep">· · ·</div>
+<div class="frame-quote"><p>포수는,<br>박수를 만드는 사람이다.</p></div>
+<div class="page-num">— 40 —</div>
+</div>
+
+
+</div>
+
+<div class="nav">
+<button class="nav-btn" id="prev-btn">← 이전</button>
+<div class="dots" id="dots"></div>
+<button class="nav-btn" id="next-btn">다음 →</button>
+</div>
+
+<!-- 레이아웃 코멘트 — 페이지마다 바뀜 -->
+<div class="layout-comment" id="layout-comment">
+<span class="lc-tag">LAYOUT COMMENT</span>
+<div class="lc-page-title" id="lc-title">예시 안내</div>
+<div id="lc-body">
+<p>이 시안은 <strong>챕터 1</strong>의 일부 페이지를 골라 보여주는 예시입니다. 실제 책은 더 많은 페이지로 구성됩니다.</p>
+<p>좌우 화살표 키나 위 점/버튼으로 페이지를 넘기면, 이 자리에 해당 페이지의 디자인 의도가 표시됩니다.</p>
+</div>
+</div>
+
+</div>
+
+<script>
+const layoutComments = [
+  {
+    title: '예시 안내',
+    body: '<p>이 시안은 챕터 1·2의 일부 페이지를 골라 보여주는 <strong>예시</strong>입니다. 실제 책은 더 많은 페이지로 구성됩니다.</p><p>좌우 화살표 키나 위 점/버튼으로 페이지를 넘기면, 이 자리에 해당 페이지의 디자인 의도가 표시됩니다.</p>'
+  },
+  {
+    title: '챕터 1 표지',
+    body: '<p>책 표지와 같은 베이지 톤. 큰 따옴표 + 굵은 야구 정의 + 이탤릭 직장인 카피 두 줄 구조.</p><p>아래쪽 점선 박스는 실제 책에서 챕터별 일러스트가 들어갈 자리입니다.</p>'
+  },
+  {
+    title: '챕터 1 — 도입',
+    body: '<p>야구장이 아닌 곳에서 시작합니다. <strong>회색 한 줄(다리)</strong> → 검정 줄 인용구 → 사무실 장면(세리프) → 점 세 개 → 원고 본문 → 야구장 연결 한 줄.</p><p>직장인 독자가 "내 얘기네" 하고 잡히는 입구 역할.</p>'
+  },
+  {
+    title: 'SECTION 1 — 포수의 개념',
+    body: '<p>원고의 어원·정의·"그라운드의 사령관" 그대로. 본문 흐름 중간에 <strong>그림 자리</strong>(포수 미트와 마스크) 한 컷.</p><p>섹션 라벨이 챕터 제목보다 작아서 위계가 잡힙니다.</p>'
+  },
+  {
+    title: 'SECTION 1 · 이어서 — 어떤 자리인가',
+    body: '<p>70% 인용구 <strong>위에</strong> 직장인 비유 한 단락을 깔았습니다. "야구도 그렇다"로 다리 놓고 인용구로 떨어집니다.</p><p>도입에서 깔아둔 직장인 톤이 본문에서도 한 번 더 호흡하게 만드는 자리.</p>'
+  },
+  {
+    title: '포수에게 요구되는 다섯 가지',
+    body: '<p>저자가 정리한 다섯 가지를 한 페이지에 깔끔하게 정렬. 비유 없이 야구 정의 + 원고 요약만.</p><p>다음 두 페이지에서 각 항목을 펼쳐 풀어쓰는데, 이 페이지는 그 <strong>지도</strong> 역할.</p>'
+  },
+  {
+    title: '첫 번째 — 한 시즌의 70%',
+    body: '<p><strong>3단 구조 표본.</strong> 위쪽 직장인 비유 단락(회색 이탤릭) → 점 세 개 → 야구 본문 풀어쓰기.</p><p>발표자/박수와 자료 만지는 사람의 비대칭 → 144경기와 4~5일 로테이션의 비대칭으로 자연스럽게 이어집니다.</p>'
+  },
+  {
+    title: '두 번째 — 투수와 소통한다',
+    body: '<p>같은 3단 구조 + 본문 중간 <strong>풀쿼트</strong> 한 번 더. 원고에 이미 강한 표현("애틋한 연인처럼…")이 있어서 그걸 페이지의 중심에 박았습니다.</p><p>항목마다 원고 결을 보고 디자인이 살짝씩 달라져도 좋습니다.</p>'
+  },
+  {
+    title: '셋째·넷째·다섯째 — 중략',
+    body: '<p>시안에서는 생략한 자리. 첫째·둘째와 <strong>같은 패턴</strong>(직장인 비유 + 야구 본문 + 필요 시 풀쿼트)으로 세 페이지가 더 들어갑니다.</p><p>실제 원고에서는 이 자리에 약 3쪽 분량이 추가됩니다.</p>'
+  },
+  {
+    title: 'SECTION 2 — 포수의 역할',
+    body: '<p>포구·송구·블로킹 3대 기본 + 기본 자세(Primary / Secondary). 이 페이지부터는 <strong>실용서 톤</strong>이 좀 더 강해집니다.</p><p>스탠스 두 개를 카드로 나란히, 그 아래 자세 분해도 자리.</p>'
+  },
+  {
+    title: '챕터 1 — 마무리',
+    body: '<p>본문을 닫는 한 단락 + 점 세 개 + <strong>액자 한 줄</strong>. 챕터 표지의 "박수를 만드는 사람" 카피가 여기서 다시 회수됩니다.</p><p>책장을 덮을 때 가져갈 한 줄.</p>'
+  }
+];
+
+(function() {
+  const pages = document.querySelectorAll('.page');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const dotsContainer = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const lcTitle = document.getElementById('lc-title');
+  const lcBody = document.getElementById('lc-body');
+  const total = pages.length;
+  let current = 0;
+
+  const groupBreaks = [1];
+
+  for (let i = 0; i < total; i++) {
+    if (groupBreaks.includes(i)) {
+      const div = document.createElement('span');
+      div.className = 'dot divider-dot';
+      dotsContainer.appendChild(div);
+    }
+    const dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', '페이지 ' + (i + 1));
+    dot.dataset.idx = i;
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
+  }
+  const dots = dotsContainer.querySelectorAll('.dot:not(.divider-dot)');
+
+  function update() {
+    pages.forEach((p, i) => p.classList.toggle('active', i === current));
+    dots.forEach((d) => d.classList.toggle('active', parseInt(d.dataset.idx) === current));
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    counter.textContent = (current + 1) + ' / ' + total;
+    const c = layoutComments[current] || layoutComments[0];
+    lcTitle.textContent = c.title;
+    lcBody.innerHTML = c.body;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goTo(i) { if (i < 0 || i >= total) return; current = i; update(); }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+    if (e.key === 'ArrowRight') goTo(current + 1);
+  });
+
+  update();
+})();
+</script>
+</body>
+</html>
